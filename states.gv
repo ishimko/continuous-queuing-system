@@ -1,0 +1,32 @@
+digraph finite_state_machine {
+    rankdir=LR;
+    node [shape = circle];
+    edge[fontsize=16];
+    
+    "00" -> "01" [label = "&lambda;"];
+    "00" -> "10" [label = "&lambda;"];
+	
+	"01" -> "11" [label = "&lambda;"];
+	"01" -> "02" [label = "&mu;"];
+	
+	"11" -> "12" [label = "&mu;"];
+	"11" -> "21" [label = "&mu;"];
+	
+	"21" -> "01" [label = "&mu;"];
+	"21" -> "22" [label = "&mu;"];
+	
+	"12" -> "22" [label = "&mu;"];
+	"12" -> "10" [label = "&mu;"];
+	
+	"22" -> "02" [label = "&mu;"];
+	"22" -> "20" [label = "&mu;"];
+	
+	"20" -> "00" [label = "&mu;"];
+	"20" -> "21" [label = "&lambda;"];
+	
+	"02" -> "00" [label = "&mu;"];
+	"02" -> "12" [label = "&lambda;"];
+	
+	"10" -> "20" [label = "&mu;"];
+	"10" -> "11" [label = "&lambda;"];
+}
