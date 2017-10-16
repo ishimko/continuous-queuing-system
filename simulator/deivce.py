@@ -3,12 +3,11 @@ from random import random
 
 
 class Device:
-    ERLANG_SHAPE = 2
-
-    def __init__(self, break_intensity, repair_intensity):
+    def __init__(self, erlang_shape, break_intensity, repair_intensity):
         self._break_intensity = break_intensity
         self._repair_intensity = repair_intensity
         self._need_time = self._get_working_time()
+        self._erlang_shape = erlang_shape
         self.broken = False
 
     def refresh(self, time):
@@ -32,11 +31,10 @@ class Device:
             self._need_time -= time
 
     def _get_working_time(self):
-        return Device._get_random_time_erlang(self._break_intensity, 1)
+        return self._get_random_time_erlang(self._break_intensity)
 
     def _get_repair_time(self):
-        return Device._get_random_time_erlang(self._repair_intensity)
+        return self._get_random_time_erlang(self._repair_intensity, self._erlang_shape)
 
-    @staticmethod
-    def _get_random_time_erlang(intensity, k=ERLANG_SHAPE):
+    def _get_random_time_erlang(self, intensity, k=1):
         return -1 / intensity * sum((log(random()) for _ in range(k)))

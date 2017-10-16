@@ -5,13 +5,19 @@ from simulator.deivce import Device
 Result = namedtuple('Result', ['all_up', 'all_down', 'one_up'])
 
 class Simulator:
-    def __init__(self, devices_count, break_intensity, repair_intensity):
+    def __init__(self, erlang_shape, devices_count, break_intensity, repair_intensity):
         self._devices_count = devices_count
         self._break_intensity = break_intensity
         self._repair_intensity = repair_intensity
+        self._erlang_shape = erlang_shape
 
     def run_simulation(self, iterations_count):
-        devices = [Device(self._break_intensity, self._repair_intensity) for _ in range(self._devices_count)]
+        device_constructor = lambda: Device(
+            self._erlang_shape,
+            self._break_intensity,
+            self._repair_intensity
+        )
+        devices = [device_constructor() for _ in range(self._devices_count)]
 
         time = 0
         all_time = 0
