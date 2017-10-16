@@ -1,7 +1,7 @@
 import sys
 
 from simulator.simulator import Simulator
-from simulator.reader import read_positive_float
+from simulator.reader import read_non_negative_float
 
 
 DEVICES_COUNT = 2
@@ -13,15 +13,18 @@ ERLANG_SHAPE = 2
 
 def mean_time_to_erlang_intensity(mean_in_hours):
     HOURS_IN_DAY = 24
-    return ERLANG_SHAPE * HOURS_IN_DAY / mean_in_hours
+    if mean_in_hours != 0:
+        return ERLANG_SHAPE * HOURS_IN_DAY / mean_in_hours
+    else:
+        return float('+inf')
 
 
 def read_repair_intensity():
-    return read_positive_float('Среднее значение времени ремонта (в часах)')
+    return read_non_negative_float('Среднее значение времени ремонта (в часах)')
 
 
 def read_break_intensity():
-    return read_positive_float('Интенсивность потока неисправностей (ед./сут.)')
+    return read_non_negative_float('Интенсивность потока неисправностей (ед./сут.)')
 
 
 def use_default():

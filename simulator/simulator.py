@@ -1,3 +1,4 @@
+from math import isfinite
 from collections import namedtuple
 
 from simulator.deivce import Device
@@ -26,6 +27,8 @@ class Simulator:
         one_up = 0
 
         for _ in range(iterations_count):
+            time = min((device._need_time for device in devices if isfinite(device._need_time)), default=1)
+
             if all((not device.broken for device in devices)):
                 all_up += time
             elif all((device.broken for device in devices)):
@@ -35,8 +38,6 @@ class Simulator:
 
             for device in devices:
                 device.refresh(time)
-
-            time = min((device._need_time for device in devices))
             all_time += time
 
         return Result(

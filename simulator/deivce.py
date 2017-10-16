@@ -37,4 +37,7 @@ class Device:
         return self._get_random_time_erlang(self._repair_intensity, self._erlang_shape)
 
     def _get_random_time_erlang(self, intensity, k=1):
-        return -1 / intensity * sum((log(random()) for _ in range(k)))
+        if intensity != 0:
+            return -1 / intensity * sum((log(random()) for _ in range(k)))
+        else:
+            return float('+inf')
